@@ -83,10 +83,23 @@ class _SplitByAmmountState extends State<SplitByAmmount> {
                   ),
                   const SizedBox(height: 10),
                   ElevatedButton(
+                    onPressed: () async {
+                      await Utils.requestPermission();
+                      await DirectoryController.getDirectory().then((dir) {
+                        setState(() {
+                          selectedDir = dir;
+                        });
+                      });
+                    },
+                    child: const Text("Seleziona un altra cartella"),
+                  ),
+                  const SizedBox(height: 10),
+                  ElevatedButton(
                     onPressed: ammountController.text.isEmpty ||
                             ammountController.text == ""
                         ? null
                         : () async {
+                            var cancel = Utils.showLoading();
                             try {
                               await SplitController.splitByAmmount(
                                   int.parse(ammountController.text),
@@ -94,6 +107,7 @@ class _SplitByAmmountState extends State<SplitByAmmount> {
                             } catch (e) {
                               BotToast.showText(text: e.toString());
                             }
+                            cancel();
                           },
                     child: const Text("Dividi in sottocartelle"),
                   ),

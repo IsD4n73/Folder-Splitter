@@ -83,16 +83,30 @@ class _SplitBySizeState extends State<SplitBySize> {
                   ),
                   const SizedBox(height: 10),
                   ElevatedButton(
+                    onPressed: () async {
+                      await Utils.requestPermission();
+                      await DirectoryController.getDirectory().then((dir) {
+                        setState(() {
+                          selectedDir = dir;
+                        });
+                      });
+                    },
+                    child: const Text("Seleziona un altra cartella"),
+                  ),
+                  const SizedBox(height: 10),
+                  ElevatedButton(
                     onPressed: sizeController.text.isEmpty ||
                             sizeController.text == ""
                         ? null
                         : () async {
+                            var cancel = Utils.showLoading();
                             try {
                               await SplitController.splitBySize(
                                   int.parse(sizeController.text), selectedDir!);
                             } catch (e) {
                               BotToast.showText(text: e.toString());
                             }
+                            cancel();
                           },
                     child: const Text("Dividi in sottocartelle"),
                   ),

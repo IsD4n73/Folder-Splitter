@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:folder_splitter/pages/error.dart';
 import 'package:folder_splitter/pages/home.dart';
 
 void main() {
@@ -22,6 +23,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       builder: (context, child) {
+        ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
+          return ErrorPage(errorDetails: errorDetails);
+        };
         child = botToastBuilder(context, child);
         return child;
       },
