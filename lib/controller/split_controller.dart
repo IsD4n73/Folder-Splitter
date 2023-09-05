@@ -3,7 +3,7 @@ import 'package:folder_splitter/controller/utils.dart';
 
 class SplitController {
   static Future<void> splitBySize(int size, Directory dir) async {
-    size = 1000000 * size;
+    size = 1000000 * (size - 1);
     List<FileSystemEntity> fileList = await Utils.listFiles(dir);
     int current = 0;
     int createdFolder = 1;
@@ -11,7 +11,8 @@ class SplitController {
 
     for (var f in fileList) {
       if (current == 0) {
-        currentDir = await Directory("${dir.path}_$createdFolder")
+        currentDir = await Directory(
+                "${dir.path}/${dir.path.split("/").last}_$createdFolder")
             .create(recursive: true);
         createdFolder++;
       }
@@ -33,7 +34,8 @@ class SplitController {
 
     for (var f in fileList) {
       if (current == 0) {
-        currentDir = await Directory("${dir.path}_$createdFolder")
+        currentDir = await Directory(
+                "${dir.path}/${dir.path.split("/").last}_$createdFolder")
             .create(recursive: true);
         createdFolder++;
       }

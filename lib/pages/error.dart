@@ -11,20 +11,32 @@ class ErrorPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Image(image: AssetImage("assets/dirIcon.png")),
-        Text(
-          kDebugMode ? errorDetails.summary.toString() : "OPS...",
-          style: const TextStyle(
+        Image.asset(
+          "assets/dirIcon.png",
+          height: 110,
+          width: 110,
+        ),
+        const SizedBox(height: 15),
+        const Text(
+          "OPS :(",
+          style: TextStyle(
             color: Colors.red,
             fontWeight: FontWeight.bold,
             fontSize: 30,
           ),
         ),
-        const Text(
-          "C'è stato un errore nell applicazione, prova a riavviare",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 15,
+        const SizedBox(height: 15),
+        Padding(
+          padding: const EdgeInsets.all(8),
+          child: Text(
+            kDebugMode
+                ? errorDetails.summary.toString()
+                : "C'è stato un errore nell applicazione, prova a riavviare",
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 15,
+            ),
+            softWrap: true,
           ),
         ),
       ],

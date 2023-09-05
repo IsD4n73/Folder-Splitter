@@ -69,6 +69,11 @@ class _SplitBySizeState extends State<SplitBySize> {
                         color: Colors.white,
                       ),
                       onChanged: (value) {
+                        if (sizeController.text.isEmpty ||
+                            sizeController.text == "" && int.parse(value) < 2) {
+                          BotToast.showText(
+                              text: "La grandezza deve superare 1 MB");
+                        }
                         setState(() {});
                       },
                       controller: sizeController,
@@ -96,7 +101,8 @@ class _SplitBySizeState extends State<SplitBySize> {
                   const SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: sizeController.text.isEmpty ||
-                            sizeController.text == ""
+                            sizeController.text == "" ||
+                            int.parse(sizeController.text) < 2
                         ? null
                         : () async {
                             var cancel = Utils.showLoading();
