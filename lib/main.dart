@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:folder_splitter/pages/home.dart';
 
@@ -17,15 +18,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Folder Splitter',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
         useMaterial3: true,
       ),
       builder: (context, child) {
         child = botToastBuilder(context, child);
-        return child!;
+        return child;
       },
       navigatorObservers: [BotToastNavigatorObserver()],
-      home: const HomePage(),
+      home: const DefaultTabController(
+        length: 2,
+        child: HomePage(),
+      ),
     );
   }
 }
