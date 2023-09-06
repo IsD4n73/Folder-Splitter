@@ -106,7 +106,7 @@ class _SplitByAmmountState extends State<SplitByAmmount> {
                                   selectedDir!);
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const  SuccessPage()),
+                                MaterialPageRoute(builder: (context) => SuccessPage()),
                               );
                             } catch (e) {
                               BotToast.showText(text: e.toString());
