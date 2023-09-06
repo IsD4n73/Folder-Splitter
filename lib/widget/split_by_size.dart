@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-
+import '../pages/success.dart';
 import '../controller/directory_controller.dart';
 import '../controller/split_controller.dart';
 import '../controller/utils.dart';
@@ -109,6 +109,10 @@ class _SplitBySizeState extends State<SplitBySize> {
                             try {
                               await SplitController.splitBySize(
                                   int.parse(sizeController.text), selectedDir!);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const  SuccessPage()),
+                              );
                             } catch (e) {
                               BotToast.showText(text: e.toString());
                             }
