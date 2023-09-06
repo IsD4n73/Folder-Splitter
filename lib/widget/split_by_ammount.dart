@@ -4,7 +4,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:folder_splitter/controller/directory_controller.dart';
 import 'package:folder_splitter/controller/split_controller.dart';
-
+import '../pages/success.dart';
 import '../controller/utils.dart';
 
 class SplitByAmmount extends StatefulWidget {
@@ -104,6 +104,10 @@ class _SplitByAmmountState extends State<SplitByAmmount> {
                               await SplitController.splitByAmmount(
                                   int.parse(ammountController.text),
                                   selectedDir!);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const  SuccessPage()),
+                              );
                             } catch (e) {
                               BotToast.showText(text: e.toString());
                             }
