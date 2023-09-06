@@ -111,7 +111,7 @@ class _SplitBySizeState extends State<SplitBySize> {
                                   int.parse(sizeController.text), selectedDir!);
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const  SuccessPage()),
+                                MaterialPageRoute(builder: (context) => SuccessPage()),
                               );
                             } catch (e) {
                               BotToast.showText(text: e.toString());
