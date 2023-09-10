@@ -9,6 +9,7 @@ Selecta a folder and split the files in subfolders
 ## Usage
 - Select the tab for the feature
 - Select the folder to be split
+- Split! 
 
 ## Languages
 🇮🇹 
