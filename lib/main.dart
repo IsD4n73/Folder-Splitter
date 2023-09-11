@@ -23,9 +23,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       builder: (context, child) {
-        ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
+        /*ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
           return ErrorPage(errorDetails: errorDetails);
-        };
+        }; */
         child = botToastBuilder(context, child);
         return child;
       },
