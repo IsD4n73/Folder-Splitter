@@ -128,11 +128,8 @@ class _SplitBySizeState extends State<SplitBySize> {
               child: ElevatedButton(
                 onPressed: () async {
                   await Utils.requestPermission();
-                  await DirectoryController.getDirectory().then((dir) {
-                    setState(() {
-                      selectedDir = dir;
-                    });
-                  });
+                  selectedDir = await DirectoryController.getDirectory();
+                  setState((){});
                 },
                 child: const Text("Seleziona la cartella da dividere"),
               ),
