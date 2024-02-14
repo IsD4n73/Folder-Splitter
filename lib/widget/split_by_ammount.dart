@@ -36,7 +36,7 @@ class _SplitByAmmountState extends State<SplitByAmmount> {
                       children: [
                         const TextSpan(text: 'Cartella: '),
                         TextSpan(
-                          text: selectedDir!.path,
+                          text: selectedDir?.path,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -53,7 +53,8 @@ class _SplitByAmmountState extends State<SplitByAmmount> {
                       children: [
                         const TextSpan(text: 'Grandezza: '),
                         TextSpan(
-                          text: DirectoryController.getDirSize(selectedDir!),
+                          text: DirectoryController.getDirSize(
+                              selectedDir ?? Directory("")),
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -85,11 +86,8 @@ class _SplitByAmmountState extends State<SplitByAmmount> {
                   ElevatedButton(
                     onPressed: () async {
                       await Utils.requestPermission();
-                      await DirectoryController.getDirectory().then((dir) {
-                        setState(() {
-                          selectedDir = dir;
-                        });
-                      });
+                      selectedDir = await DirectoryController.getDirectory();
+                      setState(() {});
                     },
                     child: const Text("Seleziona un altra cartella"),
                   ),
@@ -104,10 +102,14 @@ class _SplitByAmmountState extends State<SplitByAmmount> {
                               await SplitController.splitByAmmount(
                                   int.parse(ammountController.text),
                                   selectedDir!);
+                              if (!context.mounted) {
+                                return;
+                              }
+
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SuccessPage()),
+                                    builder: (context) => const SuccessPage()),
                               );
                             } catch (e) {
                               BotToast.showText(text: e.toString());

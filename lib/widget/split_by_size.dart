@@ -36,7 +36,7 @@ class _SplitBySizeState extends State<SplitBySize> {
                       children: [
                         const TextSpan(text: 'Cartella: '),
                         TextSpan(
-                          text: selectedDir!.path,
+                          text: selectedDir?.path,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -53,7 +53,8 @@ class _SplitBySizeState extends State<SplitBySize> {
                       children: [
                         const TextSpan(text: 'Grandezza: '),
                         TextSpan(
-                          text: DirectoryController.getDirSize(selectedDir!),
+                          text: DirectoryController.getDirSize(
+                              selectedDir ?? Directory("")),
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -90,11 +91,8 @@ class _SplitBySizeState extends State<SplitBySize> {
                   ElevatedButton(
                     onPressed: () async {
                       await Utils.requestPermission();
-                      await DirectoryController.getDirectory().then((dir) {
-                        setState(() {
-                          selectedDir = dir;
-                        });
-                      });
+                      selectedDir = await DirectoryController.getDirectory();
+                      setState(() {});
                     },
                     child: const Text("Seleziona un altra cartella"),
                   ),
@@ -109,9 +107,15 @@ class _SplitBySizeState extends State<SplitBySize> {
                             try {
                               await SplitController.splitBySize(
                                   int.parse(sizeController.text), selectedDir!);
+
+                              if (!context.mounted) {
+                                return;
+                              }
+
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => SuccessPage()),
+                                MaterialPageRoute(
+                                    builder: (context) => const SuccessPage()),
                               );
                             } catch (e) {
                               BotToast.showText(text: e.toString());
@@ -129,7 +133,7 @@ class _SplitBySizeState extends State<SplitBySize> {
                 onPressed: () async {
                   await Utils.requestPermission();
                   selectedDir = await DirectoryController.getDirectory();
-                  setState((){});
+                  setState(() {});
                 },
                 child: const Text("Seleziona la cartella da dividere"),
               ),
