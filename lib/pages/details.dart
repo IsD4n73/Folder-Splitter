@@ -26,12 +26,13 @@ class _DirectoryDetailsState extends State<DirectoryDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text("Folder Details - ${widget.splitType ? "Peso" : "Quantità"}",
-                style: const TextStyle(
-                  color: Colors.red,
-                  fontWeight: FontWeight.bold,
-                )),
+        title: Text(
+          "Folder Details - ${widget.splitType ? "Peso" : "Quantità"}",
+          style: const TextStyle(
+            color: Colors.red,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         centerTitle: true,
         backgroundColor: const Color(0xff202020),
       ),
