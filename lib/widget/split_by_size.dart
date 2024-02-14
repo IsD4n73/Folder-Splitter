@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import '../pages/details.dart';
 import '../pages/success.dart';
 import '../controller/directory_controller.dart';
 import '../controller/split_controller.dart';
@@ -15,129 +16,27 @@ class SplitBySize extends StatefulWidget {
 }
 
 class _SplitBySizeState extends State<SplitBySize> {
-  Directory? selectedDir;
-  TextEditingController sizeController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: selectedDir != null
-          ? Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 10),
-                  RichText(
-                    text: TextSpan(
-                      style: const TextStyle(
-                        color: Colors.white,
-                      ),
-                      children: [
-                        const TextSpan(text: 'Cartella: '),
-                        TextSpan(
-                          text: selectedDir?.path,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  RichText(
-                    text: TextSpan(
-                      style: const TextStyle(
-                        color: Colors.white,
-                      ),
-                      children: [
-                        const TextSpan(text: 'Grandezza: '),
-                        TextSpan(
-                          text: DirectoryController.getDirSize(
-                              selectedDir ?? Directory("")),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: TextField(
-                      style: const TextStyle(
-                        color: Colors.white,
-                      ),
-                      onChanged: (value) {
-                        if (sizeController.text.isEmpty ||
-                            sizeController.text == "" && int.parse(value) < 2) {
-                          BotToast.showText(
-                              text: "La grandezza deve superare 1 MB");
-                        }
-                        setState(() {});
-                      },
-                      controller: sizeController,
-                      decoration: const InputDecoration(
-                        labelText: "Grandezza di ogni cartella (MB)",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                      ),
-                      keyboardType: TextInputType.number,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () async {
-                      await Utils.requestPermission();
-                      selectedDir = await DirectoryController.getDirectory();
-                      setState(() {});
-                    },
-                    child: const Text("Seleziona un altra cartella"),
-                  ),
-                  const SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: sizeController.text.isEmpty ||
-                            sizeController.text == "" ||
-                            int.parse(sizeController.text) < 2
-                        ? null
-                        : () async {
-                            var cancel = Utils.showLoading();
-                            try {
-                              await SplitController.splitBySize(
-                                  int.parse(sizeController.text), selectedDir!);
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: ElevatedButton(
+          onPressed: () async {
+            await Utils.requestPermission();
+            final selectedDir = await DirectoryController.getDirectory();
+            if (!context.mounted) return;
 
-                              if (!context.mounted) {
-                                return;
-                              }
-
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const SuccessPage()),
-                              );
-                            } catch (e) {
-                              BotToast.showText(text: e.toString());
-                            }
-                            cancel();
-                          },
-                    child: const Text("Dividi in sottocartelle"),
-                  ),
-                ],
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DirectoryDetails(selectedDir, true),
               ),
-            )
-          : Padding(
-              padding: const EdgeInsets.all(10),
-              child: ElevatedButton(
-                onPressed: () async {
-                  await Utils.requestPermission();
-                  selectedDir = await DirectoryController.getDirectory();
-                  setState(() {});
-                },
-                child: const Text("Seleziona la cartella da dividere"),
-              ),
-            ),
+            );
+          },
+          child: const Text("Seleziona la cartella da dividere"),
+        ),
+      ),
     );
   }
 }
