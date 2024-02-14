@@ -24,10 +24,11 @@ class SuccessPage extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 15),
-        Padding(
-          padding: const EdgeInsets.all(8),
-          child: Text("L'operazione è stata eseguita con successo!",
-            style: const TextStyle(
+        const Padding(
+          padding: EdgeInsets.all(8),
+          child: Text(
+            "L'operazione è stata eseguita con successo!",
+            style: TextStyle(
               color: Colors.white,
               fontSize: 15,
             ),

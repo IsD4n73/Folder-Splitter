@@ -106,7 +106,8 @@ class _SplitByAmmountState extends State<SplitByAmmount> {
                                   selectedDir!);
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => SuccessPage()),
+                                MaterialPageRoute(
+                                    builder: (context) => SuccessPage()),
                               );
                             } catch (e) {
                               BotToast.showText(text: e.toString());
@@ -123,11 +124,8 @@ class _SplitByAmmountState extends State<SplitByAmmount> {
               child: ElevatedButton(
                 onPressed: () async {
                   await Utils.requestPermission();
-                  await DirectoryController.getDirectory().then((dir) {
-                    setState(() {
-                      selectedDir = dir;
-                    });
-                  });
+                  selectedDir = await DirectoryController.getDirectory();
+                  setState(() {});
                 },
                 child: const Text("Seleziona la cartella da dividere"),
               ),
