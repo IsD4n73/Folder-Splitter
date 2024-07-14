@@ -1,11 +1,6 @@
-import 'dart:io';
-
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import '../pages/details.dart';
-import '../pages/success.dart';
 import '../controller/directory_controller.dart';
-import '../controller/split_controller.dart';
 import '../controller/utils.dart';
 
 class SplitBySize extends StatefulWidget {
